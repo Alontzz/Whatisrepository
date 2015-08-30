@@ -1,0 +1,1096 @@
+SO this is my first solo tryout at programming. 
+It's a text based game(like zork--which i played...could NOT get past the troll).
+There are 8https://github.com/Alontzz/Whatisrepository/new/master# rooms, all is done inside fucktions and moving around usind calls.
+It's robust and a work in progress.
+
+
+
+
+print "\n\n\n\nthe game has the following commands: take 'object'(or take all), look(or l), drop 'object' (or drop all), inventory(or i),yes(or y), no(or n),. Moving about in the game : North, south, east, west OR n, s, w, e. \n\n\n\t\tNow a short intro:"
+
+print "\t\n You are a treasure hunter from europe who has heard\n rumours of treasue, north-west of Moghareh oasis. \nYou prepare yourself like usual for the climate and conditions to where you go.\nYou hire an egyptian to show you the way.\nFinally after 6 months of preparations\nyou arrive at the sand dunes which should hold the treasure you seek .   "
+
+
+#######   TESTING
+
+inventory_index = []
+
+
+
+
+
+camp_site_list = []
+
+oasis_list=[]
+
+sand_dune2_list=[]
+
+sand_dune3_list=[]
+
+sand_dune4_list=[]
+
+sfinks_list=[]
+
+tunnel_list=[]
+
+monster_list=[]
+
+treasure_list=[]
+
+Luck = None
+#camp_holder=0
+#plate=0
+monster="alive"
+
+def take_item(x,y,z):#muuta universaalselt kasutatavaks
+    y.append(x)#lisab x inventori
+    z.remove(x)#eemaldab x listist
+    print "\nitem taken"
+    
+    
+def drop_item(x,y,z):
+    z.append(x)
+    y.remove(x)
+    print "\nitem dropped"
+        
+def inventory():
+    print inventory_index
+    
+def break_words(stuff):
+    """This function will break up words for us."""
+    words = stuff.split(' ')
+    return words
+    
+def look(x):
+    print x
+    
+def dead(x):
+    print x
+    exit(0)
+    
+def luck():
+    #global Luck 
+    
+    Luck="true"
+    return Luck
+
+def camp_holder():
+    global camp_holder
+    camp_holder="true"
+    
+def plate():
+    global plate
+    plate = "true"
+    
+def monster_dead():
+    global monster
+    monster = "dead"
+    return monster
+  
+def oasis(x):
+    print x
+    positioning_variable=oasis
+    global Luck 
+    
+    if Luck!="true":    
+        raw_input("You have a refreshing drink from the waters\nbut as you pull your face away from the water\nyou glimpse at something in the water.\nYou reach out and grab it.\nIts a lucky talisman. You take it and feel\nthat it was a good idea to come here.") 
+        
+        print "+ 1 Luck"
+        
+        
+        inventory_index.append("talisman")
+        Luck=luck()
+           
+    else:
+        print "\nYou have a refreshing drink from the waters and\nyour head clears from worry."
+    
+    while True:
+            choice = raw_input(">")
+            choice=break_words(choice)
+            #print choice #prints out the split function output
+            
+            if "sword" in choice and "take" in choice: #take sword
+                if "sword" in oasis_list:
+                    take_item("sword",inventory_index, oasis_list)
+                else:
+                    print "Do not see it."
+                    
+            
+            
+            elif "torch" in choice and "take" in choice:#take torch
+                if "torch" in oasis_list:
+                    take_item("torch",inventory_index, oasis_list)
+                else:
+                    print "Do not see it."
+            
+                
+            elif "pickaxe" in choice and "take" in choice:# take pickaxe
+                if "pickaxe" in oasis_list:
+                    take_item("pickaxe",inventory_index, oasis_list)
+                else:
+                    print "Do not see it."
+            
+            
+            elif "inventory" in choice or "i" in choice:# look inventory
+                inventory()
+                
+            elif "take" in choice and "all" in choice:#take all items
+            
+               if "take" in choice and "all" in choice and oasis_list==[]:#informs you if there isnn't nothing to take
+               
+                    print "Nothing here"
+                    
+               else:          #takes all items       
+                if "sword" in oasis_list:
+                    take_item("sword",inventory_index, oasis_list)
+                if "pickaxe" in oasis_list:    
+                    take_item("pickaxe",inventory_index, oasis_list)
+                if "torch" in oasis_list:
+                    take_item("torch",inventory_index, oasis_list)
+             
+                    
+            elif "sword" in choice and "drop" in choice:#drop  sword
+                if "sword" in inventory_index:
+                    drop_item("sword",inventory_index, oasis_list)
+                else:
+                    print "It isn't on me!"
+                    
+                    
+            elif "talisman" in choice and "take" in choice: #take talisman
+                if "talisman" in oasis_list:
+                    take_item("talisman",inventory_index, oasis_list)
+                else:
+                    print "Do not see it."
+            elif "talisman" in choice and "drop" in choice: #take talisman
+                if "talisman" in oasis_list:
+                    take_item("talisman",inventory_index, oasis_list)
+                else:
+                    print "Do not see it."
+                    
+            elif "torch" in choice and "drop" in choice:#drop torch
+                if "torch" in inventory_index:
+                    drop_item("torch",inventory_index, oasis_list)
+                else:
+                    print "It isn't on me!"
+                    
+                
+            elif "pickaxe" in choice and "drop" in choice:#drop pickaxe
+                 if "pickaxe" in inventory_index:
+                    drop_item("pickaxe",inventory_index, oasis_list)
+                 else:
+                    print "It isn't on me!"
+                    
+                    
+                    
+            elif "drop" in choice and "all" in choice:#drop everything
+            
+               if "drop" in choice and "all" in choice and inventory_index==[]:     
+                    print "cannot drop EMTY"
+               else:
+                   if "sword" in inventory_index:
+                    drop_item("sword",inventory_index, oasis_list)
+                   if "pickaxe" in inventory_index:    
+                    drop_item("pickaxe",inventory_index, oasis_list)
+                   if "torch" in inventory_index:
+                    drop_item("torch",inventory_index, oasis_list)
+            elif "look" in choice or "l" in choice and oasis_list==[]:
+                print 'nothing of further value here'
+            elif "look" in choice or "l" in choice and oasis_list!=[]:
+                print "you see a :", oasis_list
+                
+            elif "e" in choice or "east" in choice or"n" in choice or "north" in choice or "s" in choice or "south" in choice:
+                choice=raw_input("just desert beyond : are you sure you wish to proceed?\n---To abort type anything but 'yes'")
+                if "yes" in choice or "y" in choice:
+                    dead("\n\n\nDespite your sherpas advice you wander off into the hot desert.\nYou lose track of the road and get lost.\nYou're never seen again. Good job! ")
+                    
+            elif  "w" in choice or "west" in choice:
+                camp_site("You return to camp---with luck")
+                
+            else:
+                  print "What was that?" 
+   
+def monster_room(x):
+    print "Upon entering you see a monster. What do you do?", monster
+    inventory_index.append("sword")
+    if monster=="alive":
+        hit=0
+        parry=0
+        dodge=0    
+        while True:
+           
+            
+            choice = raw_input("your doing?>")
+            choice=break_words(choice)
+            
+            if ("attack" in choice or "kill" in choice) and "sword" in inventory_index and "monster" in choice and monster=="alive" and Luck == "true"'''"talisman" in inventory_index''':
+                        
+                print "You raise your sword and battle something fierce with the monster. After a hour battling you see an opening and finally manage to thrust your sword into it.\nThat was lucky. You rest a bit before conitnuing"
+                monster_dead()
+                print monster
+                
+            elif "attack" in choice or "kill" in choice and "monster" in choice and monster=="dead":
+                print "No monster to kill,\nunless you would fancy stabbing a dead monster body"
+             
+            elif "attack" in choice or "kill" in choice  and "monster" in choice and monster=="alive" and "talisman" != inventory_index:
+                while True:
+                    print ("hit="),hit,("dodge="),dodge,("parry="),parry
+                    choice2=raw_input("You raise your sword ready to strike.\nThe beast attacks. You dodge.\nDo you SWING or PARRY or DODGE")
+                    
+                    if ("swing" in choice2 or "SWING" in choice2)and "sword" in inventory_index and hit==0:
+                        print "\nYou swing you sword, it barely scrapes the beast\nand it counters with its claws,\nscratching you from the side."
+                        hit += 1
+                    elif hit==1 and ("swing" in choice2 or "SWING" in choice2)and "sword" in inventory_index:
+                        print "\nyou swing your sword... and miss."
+                        hit+=1
+                    elif hit==2 and ("swing" in choice2 or "SWING" in choice2)and "sword" in inventory_index:
+                        print "\nWith you last strength you swing your sword at the beast,\nbut you're too weak.\nIt evades your blow hits you on the head. "
+                        dead("Three cheers.")
+                    elif ("parry" in choice2 or "PARRY" in choice2) and parry==0 and "sword" in inventory_index:
+                        print "You ready your weapon in a defensive stance.\nThe monster hits and you parry just right"
+                        parry+=1
+                    elif ("parry" in choice2 or "PARRY" in choice2) and parry==1 and "sword" in inventory_index:
+                        print"The thing is angry an thrust at you with rage.\nYou barely have the strngth to parry his advance."
+                        parry+=1
+                    elif ("parry" in choice2 or "PARRY" in choice2) and parry==2 and "sword" in inventory_index:
+                        dead("The monster attack in a rage like noneother.\nYou just can't defend yourself anymore\n-do not have the will or strength.")
+                        
+                    elif ("DODGE" in choice2 or "dodge" in choice2) and dodge==0:
+                        
+                        print "You dodge the beasts thrust.\nYou were lucky this time."
+                        dodge+=1
+                    elif ("DODGE" in choice2 or "dodge" in choice2) and dodge==1:
+                        print "You nearly escape the blow from the monster.\nCan't count on being lucky for much longer."
+                        dodge+=1
+                        
+                        
+                    elif ("DODGE" in choice2 or "dodge" in choice2) and dodge==2:
+                        dead("Another blow from the monster does not evade you.\nYou get hit and black out.Nothing more to this story...")
+                        
+                    elif parry==1 and hit==1:
+                        print "you win."
+                        exit(0)
+            elif "attack" in choice or "kill" in choice and "sword"!= inventory_index in inventory_index and "monster" in choice and monster=="alive" and "talisman" != inventory_index:
+                dead("You jump at the monster with your bares hands.\nSurely nothing good can come from this?\nThe monster makes mince meat out of you.....\nSo Soory....")
+            else:
+                 print "Nothing interesting happens. You should ATTACK the MONSTER"
+
+    else:
+        print "no monster"
+
+
+        
+  
+    while True and monster !="alive":
+            choice = raw_input(">")
+            choice=break_words(choice)
+            #print choice #prints out the split function output
+            
+            if "sword" in choice and "take" in choice: #take sword
+                if "sword" in monster_list:
+                    take_item("sword",inventory_index, monster_list)
+                else:
+                    print "Do not see it."
+            
+            elif "torch" in choice and "take" in choice:#take torch
+                if "torch" in monster_list:
+                    take_item("torch",inventory_index, monster_list)
+                else:
+                    print "Do not see it."
+            
+                
+            elif "pickaxe" in choice and "take" in choice:# take pickaxe
+                if "pickaxe" in monster_list:
+                    take_item("pickaxe",inventory_index, monster_list)
+                else:
+                    print "Do not see it."
+            
+            
+            elif "inventory" in choice or "i" in choice:# look inventory
+                inventory()
+                
+            elif "take" in choice and "all" in choice:#take all items
+            
+               if "take" in choice and "all" in choice and monster_list==[]:#informs you if there isnn't nothing to take
+               
+                    print "Nothing here"
+                    
+               else:          #takes all items       
+                if "sword" in monster_list:
+                    take_item("sword",inventory_index, monster_list)
+                if "pickaxe" in monster_list:    
+                    take_item("pickaxe",inventory_index, monster_list)
+                if "torch" in monster_list:
+                    take_item("torch",inventory_index, monster_list)
+             
+                    
+            elif "sword" in choice and "drop" in choice:#drop  sword
+                if "sword" in inventory_index:
+                    drop_item("sword",inventory_index, monster_list)
+                else:
+                    print "It isn't on me!"
+            elif "torch" in choice and "drop" in choice:#drop torch
+                if "torch" in inventory_index:
+                    drop_item("torch",inventory_index, monster_list)
+                else:
+                    print "It isn't on me!"
+                    
+                
+            elif "pickaxe" in choice and "drop" in choice:#drop pickaxe
+                 if "pickaxe" in inventory_index:
+                    drop_item("pickaxe",inventory_index, monster_list)
+                 else:
+                    print "It isn't on me!"
+                    
+                    
+            elif "talisman" in choice and "take" in choice: #take talisman
+                if "talisman" in monster_list:
+                    take_item("talisman",inventory_index, monster_list)
+                else:
+                    print "Do not see it."
+            elif "talisman" in choice and "drop" in choice: #take talisman
+                if "talisman" in monster_list:
+                    take_item("talisman",inventory_index, monster_list)
+                else:
+                    print "Do not see it."        
+            elif "drop" in choice and "all" in choice:#drop everything
+            
+               if "drop" in choice and "all" in choice and inventory_index==[]:     
+                    print "cannot drop EMTY"
+               else:
+                   if "sword" in inventory_index:
+                    drop_item("sword",inventory_index, monster_list)
+                   if "pickaxe" in inventory_index:    
+                    drop_item("pickaxe",inventory_index, monster_list)
+                   if "torch" in inventory_index:
+                    drop_item("torch",inventory_index, monster_list)
+            elif "look" in choice or "l" in choice and monster_list==[]:
+                print 'nothing of  value here'
+            elif "look" in choice or "l" in choice and monster_list!=[]:
+                print "you see a :", monster_list
+                
+            elif "w" in choice or "west" in choice or "e" in choice or "east" in choice:
+                choice=raw_input("just a wall here")
+                
+                    
+            elif  "n" in choice or "north" in choice:
+               monster("You leave the sfinks and continue your journey in the tunnel.")
+                
+            elif  "s" in choice or "south" in choice:
+                print("The way is blocked for you.")
+               
+            else:
+                print "What was that?" 
+
+
+   
+               
+                 
+
+def tunnel(x):
+    print x
+    
+    while True:
+            choice = raw_input(">")
+            choice=break_words(choice)
+            #print choice #prints out the split function output
+            
+            if "sword" in choice and "take" in choice: #take sword
+                if "sword" in tunnel_list:
+                    take_item("sword",inventory_index, tunnel_list)
+                else:
+                    print "Do not see it."
+            
+            elif "torch" in choice and "take" in choice:#take torch
+                if "torch" in tunnel_list:
+                    take_item("torch",inventory_index, tunnel_list)
+                else:
+                    print "Do not see it."
+            
+                
+            elif "pickaxe" in choice and "take" in choice:# take pickaxe
+                if "pickaxe" in tunnel_list:
+                    take_item("pickaxe",inventory_index, tunnel_list)
+                else:
+                    print "Do not see it."
+            
+            
+            elif "inventory" in choice or "i" in choice:# look inventory
+                inventory()
+                
+            elif "take" in choice and "all" in choice:#take all items
+            
+               if "take" in choice and "all" in choice and tunnel_list==[]:#informs you if there isnn't nothing to take
+               
+                    print "Nothing here"
+                    
+               else:          #takes all items       
+                if "sword" in tunnel_list:
+                    take_item("sword",inventory_index, tunnel_list)
+                if "pickaxe" in tunnel_list:    
+                    take_item("pickaxe",inventory_index, tunnel_list)
+                if "torch" in tunnel_list:
+                    take_item("torch",inventory_index, tunnel_list)
+             
+                    
+            elif "sword" in choice and "drop" in choice:#drop  sword
+                if "sword" in inventory_index:
+                    drop_item("sword",inventory_index, tunnel_list)
+                else:
+                    print "It isn't on me!"
+            elif "torch" in choice and "drop" in choice:#drop torch
+                if "torch" in inventory_index:
+                    drop_item("torch",inventory_index, tunnel_list)
+                else:
+                    print "It isn't on me!"
+                    
+                
+            elif "pickaxe" in choice and "drop" in choice:#drop pickaxe
+                 if "pickaxe" in inventory_index:
+                    drop_item("pickaxe",inventory_index, tunnel_list)
+                 else:
+                    print "It isn't on me!"
+                    
+                    
+            elif "talisman" in choice and "take" in choice: #take talisman
+                if "talisman" in tunnel_list:
+                    take_item("talisman",inventory_index, tunnel_list)
+                else:
+                    print "Do not see it."
+            elif "talisman" in choice and "drop" in choice: #take talisman
+                if "talisman" in tunnel_list:
+                    take_item("talisman",inventory_index, tunnel_list)
+                else:
+                    print "Do not see it."        
+            elif "drop" in choice and "all" in choice:#drop everything
+            
+               if "drop" in choice and "all" in choice and inventory_index==[]:     
+                    print "cannot drop EMTY"
+               else:
+                   if "sword" in inventory_index:
+                    drop_item("sword",inventory_index, tunnel_list)
+                   if "pickaxe" in inventory_index:    
+                    drop_item("pickaxe",inventory_index, tunnel_list)
+                   if "torch" in inventory_index:
+                    drop_item("torch",inventory_index, tunnel_list)
+            elif "look" in choice or "l" in choice and tunnel_list==[]:
+                print 'nothing of  value here'
+            elif "look" in choice or "l" in choice and tunnel_list!=[]:
+                print "you see a :", tunnel_list
+                
+            elif "w" in choice or "west" in choice or "e" in choice or "east" in choice:
+                choice=raw_input("just a wall here")
+                
+                    
+            elif  "n" in choice or "north" in choice:
+               monster_room("At the end of the tunnel there is a door.You enter it")
+                
+            elif  "s" in choice or "south" in choice:
+               print("The way is blocked for you.")
+                
+            else:
+                  print "What was that?" 
+tunnel("")                  
+'''
+  
+def sfinks(x):
+    print  x
+    print "\nYou realize the sfinks  moves his eyes and watches you,\nas you get to certain distance the sfinks starts to talk.\nAt this point your guide runs away screaming something about a  curse\nand whatnot"
+    choice=raw_input("Do you STAY or FLEE?")
+    if 'flee' in choice:
+        sand_dune4("You ran so fast you catch up with your guide.\nYou scold him for being a coward and continue your jolly adventures.")
+    elif 'stay' in choice:
+        print " The sfinks offers you a riddle in-exchange for safe passage. Do you agree?"
+        choice2=raw_input("YES or NO")
+        if "yes" in choice2 or "y" in choice2:
+            choice3=raw_input('the riddle :What is so delicate that saying its name breaks it?\nAnswer?:')
+            if "Silence"in choice3 or "silence" in choice3:
+                print "You have proven yourself. You may go.\nThe sfinks stands up and reveals a passageway between its legs"
+            else:
+                dead("The sfinks roars and devours you. Three cheers!!")
+        else:
+            dead("The sfinks roars and eats you whole. Felicitations!!")
+    else:
+        dead("You are so confused of what is happening that you freeze in place.\nThe sfinks grims and throws a good punch at you.\nYou fall into the sand never to rise again. Well done.")
+    
+    positioning_variable=sfinks
+        
+    while True:
+            choice = raw_input(">")
+            choice=break_words(choice)
+            #print choice #prints out the split function output
+            
+            if "sword" in choice and "take" in choice: #take sword
+                if "sword" in sfinks_list:
+                    take_item("sword",inventory_index, sfinks_list)
+                else:
+                    print "Do not see it."
+            
+            elif "torch" in choice and "take" in choice:#take torch
+                if "torch" in sfinks_list:
+                    take_item("torch",inventory_index, sfinks_list)
+                else:
+                    print "Do not see it."
+            
+                
+            elif "pickaxe" in choice and "take" in choice:# take pickaxe
+                if "pickaxe" in sfinks_list:
+                    take_item("pickaxe",inventory_index, sfinks_list)
+                else:
+                    print "Do not see it."
+            
+            
+            elif "inventory" in choice or "i" in choice:# look inventory
+                inventory()
+                
+            elif "take" in choice and "all" in choice:#take all items
+            
+               if "take" in choice and "all" in choice and sfinks_list==[]:#informs you if there isnn't nothing to take
+               
+                    print "Nothing here"
+                    
+               else:          #takes all items       
+                if "sword" in sfinks_list:
+                    take_item("sword",inventory_index, sfinks_list)
+                if "pickaxe" in sfinks_list:    
+                    take_item("pickaxe",inventory_index, sfinks_list)
+                if "torch" in sfinks_list:
+                    take_item("torch",inventory_index, sfinks_list)
+             
+                    
+            elif "sword" in choice and "drop" in choice:#drop  sword
+                if "sword" in inventory_index:
+                    drop_item("sword",inventory_index, sfinks_list)
+                else:
+                    print "It isn't on me!"
+            elif "torch" in choice and "drop" in choice:#drop torch
+                if "torch" in inventory_index:
+                    drop_item("torch",inventory_index, sfinks_list)
+                else:
+                    print "It isn't on me!"
+                    
+                
+            elif "pickaxe" in choice and "drop" in choice:#drop pickaxe
+                 if "pickaxe" in inventory_index:
+                    drop_item("pickaxe",inventory_index, sfinks_list)
+                 else:
+                    print "It isn't on me!"
+                    
+                    
+            elif "talisman" in choice and "take" in choice: #take talisman
+                if "talisman" in sfinks_list:
+                    take_item("talisman",inventory_index, sfinks_list)
+                else:
+                    print "Do not see it."
+            elif "talisman" in choice and "drop" in choice: #take talisman
+                if "talisman" in sfinks_list:
+                    take_item("talisman",inventory_index, sfinks_list)
+                else:
+                    print "Do not see it."        
+            elif "drop" in choice and "all" in choice:#drop everything
+            
+               if "drop" in choice and "all" in choice and inventory_index==[]:     
+                    print "cannot drop EMTY"
+               else:
+                   if "sword" in inventory_index:
+                    drop_item("sword",inventory_index, sfinks_list)
+                   if "pickaxe" in inventory_index:    
+                    drop_item("pickaxe",inventory_index, sfinks_list)
+                   if "torch" in inventory_index:
+                    drop_item("torch",inventory_index, sfinks_list)
+            elif "look" in choice or "l" in choice and sfinks_list==[]:
+                print 'nothing of  value here'
+            elif "look" in choice or "l" in choice and sfinks_list!=[]:
+                print "you see a :", sfinks_list
+                
+            elif "w" in choice or "west" in choice or "e" in choice or "east" in choice:
+                choice=raw_input("just desert beyond : are you sure you wish to proceed?\n---To abort type anything but 'yes'")
+                if "yes" in choice or "y" in choice:
+                    dead("\n\n\nDespite your sherpas advice you wander into the hot desert.\nYou lose track of the road and get lost.\nYou're never seen again. Mazel tov!! ")
+                    
+            elif  "n" in choice or "north" in choice:
+               tunnel("You leave the sfinks and continue your journey in the tunnel. The sfinks lies down and closes the exit.\nGuess you're trapped. ")
+                
+            elif "s" in choice or "south" in choice:
+                sand_dune4("you return to the sand dunes north of camp where you find your sherpa.\nYou scold him for being a coward and continue your way.")
+                
+            else:
+                  print "What was that?"             
+            
+def sand_dune2(x):
+    print  x
+        
+    while True:
+            choice = raw_input(">")
+            choice=break_words(choice)
+            #print choice #prints out the split function output
+            
+            if "sword" in choice and "take" in choice: #take sword
+                if "sword" in sand_dune2_list:
+                    take_item("sword",inventory_index, sand_dune2_list)
+                else:
+                    print "Do not see it."
+            
+            elif "torch" in choice and "take" in choice:#take torch
+                if "torch" in sand_dune2_list:
+                    take_item("torch",inventory_index, sand_dune2_list)
+                else:
+                    print "Do not see it."
+            
+                
+            elif "pickaxe" in choice and "take" in choice:# take pickaxe
+                if "pickaxe" in sand_dune2_list:
+                    take_item("pickaxe",inventory_index, sand_dune2_list)
+                else:
+                    print "Do not see it."
+            
+            
+            elif "inventory" in choice or "i" in choice:# look inventory
+                inventory()
+                
+            elif "take" in choice and "all" in choice:#take all items
+            
+               if "take" in choice and "all" in choice and sand_dune2_list==[]:#informs you if there isnn't nothing to take
+               
+                    print "Nothing here"
+                    
+               else:          #takes all items       
+                if "sword" in sand_dune2_list:
+                    take_item("sword",inventory_index, sand_dune2_list)
+                if "pickaxe" in sand_dune2_list:    
+                    take_item("pickaxe",inventory_index, sand_dune2_list)
+                if "torch" in sand_dune2_list:
+                    take_item("torch",inventory_index, sand_dune2_list)
+             
+                    
+            elif "sword" in choice and "drop" in choice:#drop  sword
+                if "sword" in inventory_index:
+                    drop_item("sword",inventory_index, sand_dune2_list)
+                else:
+                    print "It isn't on me!"
+            elif "torch" in choice and "drop" in choice:#drop torch
+                if "torch" in inventory_index:
+                    drop_item("torch",inventory_index, sand_dune2_list)
+                else:
+                    print "It isn't on me!"
+                    
+                
+            elif "pickaxe" in choice and "drop" in choice:#drop pickaxe
+                 if "pickaxe" in inventory_index:
+                    drop_item("pickaxe",inventory_index, sand_dune2_list)
+                 else:
+                    print "It isn't on me!"
+                    
+                    
+            elif "talisman" in choice and "take" in choice: #take talisman
+                if "talisman" in sand_dune2_list:
+                    take_item("talisman",inventory_index, sand_dune2_list)
+                else:
+                    print "Do not see it."
+            elif "talisman" in choice and "drop" in choice: #take talisman
+                if "talisman" in sand_dune2_list:
+                    take_item("talisman",inventory_index, sand_dune2_list)
+                else:
+                    print "Do not see it."        
+            elif "drop" in choice and "all" in choice:#drop everything
+            
+               if "drop" in choice and "all" in choice and inventory_index==[]:     
+                    print "cannot drop EMTY"
+               else:
+                   if "sword" in inventory_index:
+                    drop_item("sword",inventory_index, sand_dune2_list)
+                   if "pickaxe" in inventory_index:    
+                    drop_item("pickaxe",inventory_index, sand_dune2_list)
+                   if "torch" in inventory_index:
+                    drop_item("torch",inventory_index, sand_dune2_list)
+            elif "look" in choice or "l" in choice and sand_dune2_list==[]:
+                print 'nothing of  value here'
+            elif "look" in choice or "l" in choice and sand_dune2_list!=[]:
+                print "you see a :", sand_dune2_list
+                
+            elif "w" in choice or "west" in choice or "s" in choice or "south" in choice:
+                choice=raw_input("just desert beyond : are you sure you wish to proceed?\n---To abort type anything but 'yes'")
+                if "yes" in choice or "y" in choice:
+                    dead("\n\n\nDespite your sherpas advice you wander into the hot desert.\nYou lose track of the road and get lost.\nYou're never seen again. Good job! ")
+                    
+            elif  "n" in choice or "north" in choice:
+                sand_dune3("You leave the big sand-dune and return to little sand-dunes")
+                
+            elif "e" in choice or "east" in choice:
+                camp_site("you return to camp.")
+                
+            else:
+                  print "What was that?"             
+           
+def sand_dune3(x):
+    
+    print  x
+    
+    if plate!="true":
+        print "As you stroll in-between the sand and whatnot,\n you stumble on something.\nAs you get up and look at what it is you stumbled upon on.\nIt's an old looking clay plate.\nYou can make out the egyptian word for -- Silence. What could it mean?"
+        plate()
+    else:
+        print "You merrily stroll here knowingly avoid the tripping plate"
+    while True:
+            choice = raw_input(">")
+            choice=break_words(choice)
+            #print choice #prints out the split function output
+            
+            if "sword" in choice and "take" in choice: #take sword
+                if "sword" in sand_dune3_list:
+                    take_item("sword",inventory_index, sand_dune3_list)
+                else:
+                    print "Do not see it."
+            
+            elif "torch" in choice and "take" in choice:#take torch
+                if "torch" in sand_dune3_list:
+                    take_item("torch",inventory_index, sand_dune3_list)
+                else:
+                    print "Do not see it."
+            
+            elif "talisman" in choice and "take" in choice: #take talisman
+                if "talisman" in sand_dune2:
+                    take_item("talisman",inventory_index, sand_dune2)
+                else:
+                    print "Do not see it."
+            elif "talisman" in choice and "drop" in choice: #take talisman
+                if "talisman" in sand_dune2:
+                    take_item("talisman",inventory_index, sand_dune2)
+                else:
+                    print "Do not see it."    
+            elif "pickaxe" in choice and "take" in choice:# take pickaxe
+                if "pickaxe" in sand_dune3_list:
+                    take_item("pickaxe",inventory_index, sand_dune3_list)
+                else:
+                    print "Do not see it."
+            
+            
+            elif "inventory" in choice or "i" in choice:# look inventory
+                inventory()
+                
+            elif "take" in choice and "all" in choice:#take all items
+            
+               if "take" in choice and "all" in choice and sand_dune3_list==[]:#informs you if there isnn't nothing to take
+               
+                    print "Nothing here"
+                    
+               else:          #takes all items       
+                if "sword" in sand_dune3_list:
+                    take_item("sword",inventory_index, sand_dune3_list)
+                if "pickaxe" in sand_dune3_list:    
+                    take_item("pickaxe",inventory_index, sand_dune3_list)
+                if "torch" in sand_dune3_list:
+                    take_item("torch",inventory_index, sand_dune3_list)
+             
+                    
+            elif "sword" in choice and "drop" in choice:#drop  sword
+                if "sword" in inventory_index:
+                    drop_item("sword",inventory_index, sand_dune3_list)
+                else:
+                    print "It isn't on me!"
+            elif "torch" in choice and "drop" in choice:#drop torch
+                if "torch" in inventory_index:
+                    drop_item("torch",inventory_index, sand_dune3_list)
+                else:
+                    print "It isn't on me!"
+                    
+                
+            elif "pickaxe" in choice and "drop" in choice:#drop pickaxe
+                 if "pickaxe" in inventory_index:
+                    drop_item("pickaxe",inventory_index, sand_dune3_list)
+                 else:
+                    print "It isn't on me!"
+                    
+                    
+                    
+            elif "drop" in choice and "all" in choice:#drop everything
+            
+               if "drop" in choice and "all" in choice and inventory_index==[]:     
+                    print "cannot drop EMTY"
+               else:
+                   if "sword" in inventory_index:
+                    drop_item("sword",inventory_index, sand_dune3_list)
+                   if "pickaxe" in inventory_index:    
+                    drop_item("pickaxe",inventory_index, sand_dune3_list)
+                   if "torch" in inventory_index:
+                    drop_item("torch",inventory_index, sand_dune3_list)
+            elif "look" in choice or "l" in choice and sand_dune3_list==[]:
+                print 'nothing of value here'
+            elif "look" in choice or "l" in choice and sand_dune3_list!=[]:
+                print "you see a :", sand_dune3_list
+                
+            elif "w" in choice or "west" in choice or"n" in choice or "north" in choice :
+                choice=raw_input("just desert beyond : are you sure you wish to proceed?\n---To abort type anything but 'yes'")
+                if "yes" in choice or "y" in choice:
+                    dead("\n\n\nDespite your sherpas advice you wander into the hot desert.\nYou lose track of the road and get lost.\nYou're never seen again. Good job! ")
+                    
+            elif  "e" in choice or "east" in choice:
+                sand_dune4("You return to sand dunes north of camp")
+                
+            elif "s" in choice or "south" in choice:
+                sand_dune2("You wander south into more sand dunes.")
+                
+            else:
+                  print "What was that?" 
+                  
+                  
+
+def sand_dune4(x):
+    print x 
+        
+    while True:
+            choice = raw_input(">")
+            choice=break_words(choice)
+            #print choice #prints out the split function output
+            
+            if "sword" in choice and "take" in choice: #take sword
+                if "sword" in sand_dune4_list:
+                    take_item("sword",inventory_index, sand_dune4_list)
+                else:
+                    print "Do not see it."
+            
+            elif "torch" in choice and "take" in choice:#take torch
+                if "torch" in sand_dune4_list:
+                    take_item("torch",inventory_index, sand_dune4_list)
+                else:
+                    print "Do not see it."
+            
+                
+            elif "pickaxe" in choice and "take" in choice:# take pickaxe
+                if "pickaxe" in sand_dune4_list:
+                    take_item("pickaxe",inventory_index, sand_dune4_list)
+                else:
+                    print "Do not see it."
+            
+            elif "talisman" in choice and "take" in choice: #take talisman
+                if "talisman" in sand_dune2:
+                    take_item("talisman",inventory_index, sand_dune2)
+                else:
+                    print "Do not see it."
+            elif "talisman" in choice and "drop" in choice: #take talisman
+                if "talisman" in sand_dune2:
+                    take_item("talisman",inventory_index, sand_dune2)
+                else:
+                    print "Do not see it."
+            elif "inventory" in choice or "i" in choice:# look inventory
+                inventory()
+                
+            elif "take" in choice and "all" in choice:#take all items
+            
+               if "take" in choice and "all" in choice and sand_dune4_list==[]:#informs you if there isnn't nothing to take
+               
+                    print "Nothing here"
+                    
+               else:          #takes all items       
+                if "sword" in sand_dune4_list:
+                    take_item("sword",inventory_index, sand_dune4_list)
+                if "pickaxe" in sand_dune4_list:    
+                    take_item("pickaxe",inventory_index, sand_dune4_list)
+                if "torch" in sand_dune4_list:
+                    take_item("torch",inventory_index, sand_dune4_list)
+             
+                    
+                
+            
+                
+            elif "sword" in choice and "drop" in choice:#drop  sword
+                if "sword" in inventory_index:
+                    drop_item("sword",inventory_index, sand_dune4_list)
+                else:
+                    print "It isn't on me!"
+            elif "torch" in choice and "drop" in choice:#drop torch
+                if "torch" in inventory_index:
+                    drop_item("torch",inventory_index, sand_dune4_list)
+                else:
+                    print "It isn't on me!"
+                    
+                
+            elif "pickaxe" in choice and "drop" in choice:#drop pickaxe
+                 if "pickaxe" in inventory_index:
+                    drop_item("pickaxe",inventory_index, sand_dune4_list)
+                 else:
+                    print "It isn't on me!"
+                    
+                    
+                    
+            elif "drop" in choice and "all" in choice:#drop everything
+            
+               if "drop" in choice and "all" in choice and inventory_index==[]:     
+                    print "cannot drop EMTY"
+               else:
+                   if "sword" in inventory_index:
+                    drop_item("sword",inventory_index, sand_dune4_list)
+                   if "pickaxe" in inventory_index:    
+                    drop_item("pickaxe",inventory_index, sand_dune4_list)
+                   if "torch" in inventory_index:
+                    drop_item("torch",inventory_index, sand_dune4_list)
+            elif "look" in choice or "l" in choice and sand_dune4_list==[]:
+                print 'nothing of value here'
+            elif "look" in choice or "l" in choice and sand_dune4_list!=[]:
+                print "you see a :", sand_dune4_list
+                
+            elif "e" in choice or "east" in choice:
+                choice=raw_input("just desert beyond : are you sure you wish to proceed?\n---To abort type anything but 'yes'")
+                if "yes" in choice or "y" in choice:
+                    dead("\n\n\nDespite your sherpas advice you wander into the hot desert.\nYou lose track of the road and get lost.\nYou're never seen again. Good job! ")
+            elif  "w" in choice or "west" in choice:
+                sand_dune3("You wander further into the sand dunes")
+                
+            elif  "n" in choice or "north" in choice:
+                sfinks("Continuing north you find yourself in front of a sfinks.")
+                raw
+                    
+            elif  "s" in choice or "south" in choice:
+                camp_site("You return to camp")
+                
+            else:
+                  print "What was that?" 
+                  
+           
+ 
+
+
+
+
+def camp_site(x):
+    
+    
+    if camp_holder!="true":    
+        camp_site_list.append("sword")
+        camp_site_list.append("torch")
+        camp_site_list.append("pickaxe")
+        camp_holder()
+        
+    print x
+    
+    if camp_site_list != []:
+        print "In the camp you see: %s" % camp_site_list
+    else:
+        print "just your camp"
+    
+    
+    while True:
+        choice = raw_input(">")
+        choice=break_words(choice)
+        #print choice #prints out the split function output
+        
+        if "sword" in choice and "take" in choice: #take sword
+            if "sword" in camp_site_list:
+                take_item("sword",inventory_index, camp_site_list)
+            else:
+                print "Do not see it."
+        
+        elif "torch" in choice and "take" in choice:#take torch
+            if "torch" in camp_site_list:
+                take_item("torch",inventory_index, camp_site_list)
+            else:
+                print "Do not see it."
+        
+            
+        elif "pickaxe" in choice and "take" in choice:# take pickaxe
+            if "pickaxe" in camp_site_list:
+                take_item("pickaxe",inventory_index, camp_site_list)
+            else:
+                print "Do not see it."
+        
+        elif "talisman" in choice and "take" in choice: #take talisman
+                if "talisman" in sand_dune2:
+                    take_item("talisman",inventory_index, sand_dune2)
+                else:
+                    print "Do not see it."
+        elif "talisman" in choice and "drop" in choice: #take talisman
+                if "talisman" in sand_dune2:
+                    take_item("talisman",inventory_index, sand_dune2)
+                else:
+                    print "Do not see it."
+        elif "inventory" in choice or "i" in choice:# look inventory
+            inventory()
+            
+        elif "take" in choice and "all" in choice:#take all items
+        
+           if "take" in choice and "all" in choice and camp_site_list==[]:#informs you if there isnn't nothing to take
+           
+                print "Nothing here"
+                
+           else:          #takes all items       
+            if "sword" in camp_site_list:
+                take_item("sword",inventory_index, camp_site_list)
+            if "pickaxe" in camp_site_list:    
+                take_item("pickaxe",inventory_index, camp_site_list)
+            if "torch" in camp_site_list:
+                take_item("torch",inventory_index, camp_site_list)
+         
+                
+            
+        
+            
+        elif "sword" in choice and "drop" in choice:#drop  sword
+            if "sword" in inventory_index:
+                drop_item("sword",inventory_index, camp_site_list)
+            else:
+                print "It isn't on me!"
+            
+            
+            
+            
+        elif "torch" in choice and "drop" in choice:#drop torch
+            if "torch" in inventory_index:
+                drop_item("torch",inventory_index, camp_site_list)
+            else:
+                print "It isn't on me!"
+                
+            
+        elif "pickaxe" in choice and "drop" in choice:#drop pickaxe
+             if "pickaxe" in inventory_index:
+                drop_item("pickaxe",inventory_index, camp_site_list)
+             else:
+                print "It isn't on me!"
+                
+                
+                
+        elif "drop" in choice and "all" in choice:#drop everything
+        
+           if "drop" in choice and "all" in choice and inventory_index==[]:     
+                print "cannot drop EMTY"
+           else:
+               if "sword" in inventory_index:
+                drop_item("sword",inventory_index, camp_site_list)
+               if "pickaxe" in inventory_index:    
+                drop_item("pickaxe",inventory_index, camp_site_list)
+               if "torch" in inventory_index:
+                drop_item("torch",inventory_index, camp_site_list)
+                
+        elif "look" in choice or "l" in choice and camp_site_list==[]:
+            print 'nothing of value here'
+            
+        elif "look" in choice or "l" in choice and camp_site_list!=[]:
+            print "you see a :", camp_site_list
+                
+      
+        elif  "n" in choice or "north" in choice:
+            print "You travel north to see what lies there."
+            sand_dune4(" The guide suggests the supposed ruins lie  further north,\nbut as an expierenced adventurer,\nyou know that it is always a good idea to look around a bit")
+        elif "w" in choice or "west" in choice:
+            sand_dune2("you wander between the deserts sands\nand you come across an enormous sanddune\nand you think to yourself : what hidden secrets can its bosom hide...")
+            
+        elif "e" in choice or "east" in choice:
+            
+            oasis("you come across an oasis.")
+            
+        else:
+              print "What was that?"           
+        
+camp_site("you arrive at camp")        
+'''            
+      
+
+
+
+
+#programmi lopp
+    
+
+
+
+
+
+
