@@ -3,6 +3,7 @@ It's a text based game(like zork--which i played...could NOT get past the troll)
 There are 8 rooms, all is done inside functions and moving around using function-calls.
 It's robust and a work in progress.
 I hope to adapt it to using classes and maybe some graphics? Not sure about the last one though.
+The first version took about 15 hours to complete. This has roughly 20+ hours into it.
 
 
 
